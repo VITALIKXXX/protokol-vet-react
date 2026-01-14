@@ -1,11 +1,21 @@
+import { BreedersPage } from "../features/page/BreedersPage.js";
+import { AppShell, Header, Title, Subtitle, Main, Footer } from "./App.styles.js";
 
-
-function App() {
+const App = () => {
   return (
-    <div className="App">
+    <AppShell>
+      <Header>
+        <Title>Baza Hodowców</Title>
+        <Subtitle>Telefon • Mapa • Kontakt • Notatka (offline)</Subtitle>
+      </Header>
 
-    </div>
+      <Main>
+        <BreedersPage />
+      </Main>
+
+      <Footer>Wersja MVP • localStorage</Footer>
+    </AppShell>
   );
-}
+};
 
 export default App;
