@@ -7,7 +7,14 @@ Description
 https://vitalikxxx.github.io/protokol-vet-react/
 
 
-
+## Technologies used:
+- HTML
+- CSS
+- JavaScript
+- BEM
+- Grid
+- React
+- Flex
 
 
 
