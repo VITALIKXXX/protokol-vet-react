@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/protokol-vet-react/static/js/main.153d23fe.js",
+    "main.js": "/protokol-vet-react/static/js/main.fdf37175.js",
     "static/js/453.2d86b205.chunk.js": "/protokol-vet-react/static/js/453.2d86b205.chunk.js",
     "index.html": "/protokol-vet-react/index.html",
-    "main.153d23fe.js.map": "/protokol-vet-react/static/js/main.153d23fe.js.map",
+    "main.fdf37175.js.map": "/protokol-vet-react/static/js/main.fdf37175.js.map",
     "453.2d86b205.chunk.js.map": "/protokol-vet-react/static/js/453.2d86b205.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.153d23fe.js"
+    "static/js/main.fdf37175.js"
   ]
 }
