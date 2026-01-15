@@ -16,11 +16,13 @@ export const Header = styled.header`
 export const Title = styled.h1`
   margin: 0;
   font-size: 26px;
+  color: #8495c2;
 `;
 
 export const Subtitle = styled.p`
   margin: 6px 0 0;
   opacity: 0.8;
+  color: #203466;
 `;
 
 export const Main = styled.main`
