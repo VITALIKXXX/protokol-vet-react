@@ -6,7 +6,7 @@ Description
 
 https://vitalikxxx.github.io/protokol-vet-react/
 
-![Animation]
+![Animation](https://github.com/VITALIKXXX/protokol-vet-react/blob/f8cfb5b7b92eda62f3a0474644292dcf0afa431d/public/Animation%20%20NEWwww1.gif)
 
 
 ## Technologies used:
