@@ -6,6 +6,8 @@ Description
 
 https://vitalikxxx.github.io/protokol-vet-react/
 
+![Animation]
+
 
 ## Technologies used:
 - HTML
