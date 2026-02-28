@@ -18,6 +18,7 @@ export const BreedersPage = () => {
     const [query, setQuery] = useState("");
     const [editingBreeder, setEditingBreeder] = useState(null);
 
+
     //useEffect(() => {
     //   saveBreeders(breeders);
     //}, [breeders]);
