@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import { loadBreeders, saveBreeders } from "../../core/storage/breedersStorage.js";
+import { useMemo, useState } from "react";
+//import { loadBreeders, saveBreeders } from "../../core/storage/breedersStorage.js";
 import { BreederForm } from "../form/BreederForm.js";
 import { BreedersList } from "../list/BreedersList.js";
 import {
@@ -14,13 +14,13 @@ import {
 const createId = () => `${Date.now()}_${Math.random().toString(16).slice(2)}`;
 
 export const BreedersPage = () => {
-    const [breeders, setBreeders] = useState(() => loadBreeders());
+    const [breeders, setBreeders] = useState([]);
     const [query, setQuery] = useState("");
     const [editingBreeder, setEditingBreeder] = useState(null);
 
-    useEffect(() => {
-        saveBreeders(breeders);
-    }, [breeders]);
+    //useEffect(() => {
+    //   saveBreeders(breeders);
+    //}, [breeders]);
 
     const filtered = useMemo(() => {
         const q = query.trim().toLowerCase();
