@@ -1,6 +1,5 @@
-import { useMemo, useState } from "react";
-//import { loadBreeders, saveBreeders } from "../../core/storage/breedersStorage.js";
-import { createBreeder } from "../../core/firebase/breedersApi.js";
+import { useEffect, useMemo, useState } from "react";
+import { createBreeder, subscribeBreeders } from "../../core/firebase/breedersApi.js";
 import { BreederForm } from "../form/BreederForm.js";
 import { BreedersList } from "../list/BreedersList.js";
 import {
@@ -12,21 +11,20 @@ import {
     SearchMeta,
 } from "./BreedersPage.styles.js";
 
-const createId = () => `${Date.now()}_${Math.random().toString(16).slice(2)}`;
 
 export const BreedersPage = () => {
     const [breeders, setBreeders] = useState([]);
     const [query, setQuery] = useState("");
     const [editingBreeder, setEditingBreeder] = useState(null);
 
-
-    //useEffect(() => {
-    //   saveBreeders(breeders);
-    //}, [breeders]);
+    useEffect(() => {
+        const unsubscribe = subscribeBreeders(setBreeders);
+        return () => unsubscribe();
+    }, []);
 
     const filtered = useMemo(() => {
         const q = query.trim().toLowerCase();
-        const sorted = [...breeders].sort((a, b) => b.createdAt - a.createdAt);
+        const sorted = [...breeders].sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
         if (!q) return sorted;
 
         const match = (value) => String(value || "").toLowerCase().includes(q);
