@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 //import { loadBreeders, saveBreeders } from "../../core/storage/breedersStorage.js";
+import { createBreeder } from "../../core/firebase/breedersApi.js";
 import { BreederForm } from "../form/BreederForm.js";
 import { BreedersList } from "../list/BreedersList.js";
 import {
@@ -35,19 +36,8 @@ export const BreedersPage = () => {
         );
     }, [breeders, query]);
 
-    const handleCreate = (data) => {
-        const newBreeder = {
-            id: createId(),
-            name: data.name,
-            farmNumber: data.farmNumber,
-            contactName: data.contactName,
-            phone: data.phone,
-            mapUrl: data.mapUrl,
-            note: data.note,
-            createdAt: Date.now(),
-        };
-
-        setBreeders((prev) => [newBreeder, ...prev]);
+    const handleCreate = async (data) => {
+        await createBreeder(data);
     };
 
     const handleUpdate = (id, data) => {
