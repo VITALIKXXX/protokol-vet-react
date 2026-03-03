@@ -15,4 +15,4 @@ const app = initializeApp(firebaseConfig);
 
 export const db = getFirestore(app);
 
-console.log("FIREBASE projectId:", firebaseConfig.projectId);
+console.log("FIREBASE projectId:", firebaseConfig.projectId, "DEPLOY 03.03");
