@@ -12,7 +12,8 @@ import {
 } from "./BreedersPage.styles.js";
 
 
-export const BreedersPage = () => {
+export const BreedersPage = ({ role }) => {
+    const isAdmin = role === "admin";
     const [breeders, setBreeders] = useState([]);
     const [query, setQuery] = useState("");
     const [editingBreeder, setEditingBreeder] = useState(null);
@@ -58,8 +59,7 @@ export const BreedersPage = () => {
     };
 
     const handleDelete = (id) => {
-        // eslint-disable-next-line no-restricted-globals
-        const ok = confirm("Na pewno usunąć tego hodowcę?");
+        const ok = window.confirm("Na pewno usunąć tego hodowcę?");
         if (!ok) return;
 
         setBreeders((prev) => prev.filter((b) => b.id !== id));
@@ -98,7 +98,10 @@ export const BreedersPage = () => {
                 </SearchBox>
             </TopGrid>
 
-            <BreedersList breeders={filtered} onEdit={handleEditStart} onDelete={handleDelete} />
+            <BreedersList
+                breeders={filtered}
+                onEdit={isAdmin ? handleEditStart : undefined}
+                onDelete={isAdmin ? handleDelete : undefined} />
         </Page>
     );
 };

@@ -1,5 +1,6 @@
 import { BreedersPage } from "../features/page/BreedersPage.js";
 import { AppShell, Header, Title, Subtitle, Main, Footer } from "./App.styles.js";
+import { AuthGate } from "../core/firebase/auth/AuthGate.js";
 
 const App = () => {
   return (
@@ -10,10 +11,12 @@ const App = () => {
       </Header>
 
       <Main>
-        <BreedersPage />
+        <AuthGate>
+          {({ role }) => <BreedersPage role={role} />}
+        </AuthGate>
       </Main>
 
-      <Footer>Wersja MVP • localStorage</Footer>
+      <Footer>Wersja MVP • Firebase</Footer>
     </AppShell>
   );
 };
