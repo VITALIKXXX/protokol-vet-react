@@ -52,12 +52,17 @@ export const BreederCard = ({ breeder, onEdit, onDelete }) => {
                 </TitleRow>
 
                 <Actions>
-                    <SmallButton type="button" onClick={() => onEdit(breeder)}>
-                        Edytuj
-                    </SmallButton>
-                    <DangerButton type="button" onClick={() => onDelete(breeder.id)}>
-                        Usuń
-                    </DangerButton>
+                    {onEdit && (
+                        <SmallButton type="button" onClick={() => onEdit(breeder)}>
+                            Edytuj
+                        </SmallButton>
+                    )}
+
+                    {onDelete && (
+                        <DangerButton type="button" onClick={() => onDelete(breeder.id)}>
+                            Usuń
+                        </DangerButton>
+                    )}
                 </Actions>
             </Top>
 
