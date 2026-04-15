@@ -1,10 +1,13 @@
 import {
     addDoc,
     collection,
+    deleteDoc,
+    doc,
     onSnapshot,
     orderBy,
     query,
     serverTimestamp,
+    updateDoc,
 } from "firebase/firestore";
 import { db } from "./firebaseApp.js";
 
@@ -26,7 +29,6 @@ const mapDocToBreeder = (docSnap) => {
     };
 };
 
-
 export const subscribeBreeders = (onChange) => {
     const q = query(breedersCollection, orderBy("createdAt", "desc"));
 
@@ -35,7 +37,6 @@ export const subscribeBreeders = (onChange) => {
         onChange(items);
     });
 };
-
 
 export const createBreeder = async (data) => {
     const payload = {
@@ -50,4 +51,22 @@ export const createBreeder = async (data) => {
     };
 
     await addDoc(breedersCollection, payload);
+};
+
+export const updateBreeder = async (id, data) => {
+    const breederRef = doc(db, "breeders", id);
+
+    await updateDoc(breederRef, {
+        name: data.name || "",
+        farmNumber: data.farmNumber || "",
+        contactName: data.contactName || "",
+        phone: data.phone || "",
+        mapUrl: data.mapUrl || "",
+        note: data.note || "",
+    });
+};
+
+export const removeBreeder = async (id) => {
+    const breederRef = doc(db, "breeders", id);
+    await deleteDoc(breederRef);
 };

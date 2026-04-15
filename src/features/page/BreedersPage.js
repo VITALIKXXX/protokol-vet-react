@@ -1,5 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { createBreeder, subscribeBreeders } from "../../core/firebase/breedersApi.js";
+import {
+    createBreeder,
+    subscribeBreeders,
+    updateBreeder,
+    removeBreeder,
+} from "../../core/firebase/breedersApi.js";
 import { BreederForm } from "../form/BreederForm.js";
 import { BreedersList } from "../list/BreedersList.js";
 import {
@@ -39,33 +44,21 @@ export const BreedersPage = ({ role }) => {
         await createBreeder(data);
     };
 
-    const handleUpdate = (id, data) => {
-        setBreeders((prev) =>
-            prev.map((b) =>
-                b.id === id
-                    ? {
-                        ...b,
-                        name: data.name,
-                        farmNumber: data.farmNumber,
-                        contactName: data.contactName,
-                        phone: data.phone,
-                        mapUrl: data.mapUrl,
-                        note: data.note,
-                    }
-                    : b
-            )
-        );
+    const handleUpdate = async (id, data) => {
+        await updateBreeder(id, data);
         setEditingBreeder(null);
     };
 
-    const handleDelete = (id) => {
+    const handleDelete = async (id) => {
         const ok = window.confirm("Na pewno usunąć tego hodowcę?");
         if (!ok) return;
 
-        setBreeders((prev) => prev.filter((b) => b.id !== id));
-        if (editingBreeder?.id === id) setEditingBreeder(null);
-    };
+        await removeBreeder(id);
 
+        if (editingBreeder?.id === id) {
+            setEditingBreeder(null);
+        }
+    };
     const handleEditStart = (breeder) => {
         setEditingBreeder(breeder);
         window.scrollTo({ top: 0, behavior: "smooth" });
