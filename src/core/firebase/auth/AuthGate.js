@@ -35,7 +35,7 @@ export const AuthGate = ({ children }) => {
 
     return (
         <div>
-            <div style={{ padding: 10, fontSize: 12, opacity: 0.8 }}>
+            <div style={{ padding: 10, color: "black", fontSize: 16, opacity: 0.8 }}>
                 Zalogowany: <b>{user.email}</b> | rola: <b>{role || "brak"}</b>{" "}
                 <button onClick={() => signOut(auth)} style={{ marginLeft: 10 }}>
                     Wyloguj
