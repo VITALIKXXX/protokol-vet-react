@@ -14,7 +14,7 @@ import {
     Button,
 } from "./BreederForm.styles.js";
 
-const empty = { name: "", farmNumber: "", contactName: "", phone: "", mapUrl: "", note: "" };
+const empty = { name: "", contactName: "", phone: "", mapUrl: "", note: "" };
 
 export const BreederForm = ({ mode, initialValues, onCreate, onUpdate, onCancelEdit }) => {
     const [values, setValues] = useState(empty);
@@ -23,7 +23,6 @@ export const BreederForm = ({ mode, initialValues, onCreate, onUpdate, onCancelE
         if (mode === "edit" && initialValues) {
             setValues({
                 name: initialValues.name || "",
-                farmNumber: initialValues.farmNumber || "",
                 contactName: initialValues.contactName || "",
                 phone: initialValues.phone || "",
                 mapUrl: initialValues.mapUrl || "",
@@ -38,7 +37,7 @@ export const BreederForm = ({ mode, initialValues, onCreate, onUpdate, onCancelE
         setValues((prev) => ({ ...prev, [key]: e.target.value }));
     };
 
-    const isValid = values.name.trim() && values.farmNumber.trim();
+    const isValid = values.name.trim();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -46,7 +45,6 @@ export const BreederForm = ({ mode, initialValues, onCreate, onUpdate, onCancelE
 
         const payload = {
             name: values.name.trim(),
-            farmNumber: values.farmNumber.trim(),
             contactName: values.contactName.trim(),
             phone: values.phone.trim(),
             mapUrl: values.mapUrl.trim(),
@@ -67,7 +65,7 @@ export const BreederForm = ({ mode, initialValues, onCreate, onUpdate, onCancelE
             <Header>
                 <Title>{mode === "edit" ? "Edytuj hodowcę" : "Dodaj hodowcę"}</Title>
                 <Hint>
-                    Wymagane: <b>Nazwa</b> i <b>Numer fermy</b>
+                    Wymagane: <b>Nazwa</b>
                 </Hint>
             </Header>
 
@@ -78,10 +76,6 @@ export const BreederForm = ({ mode, initialValues, onCreate, onUpdate, onCancelE
                         <Input value={values.name} onChange={setField("name")} />
                     </Field>
 
-                    <Field>
-                        <Label>Numer fermy *</Label>
-                        <Input value={values.farmNumber} onChange={setField("farmNumber")} placeholder="np. 123" />
-                    </Field>
                 </Row>
 
                 <Row>

@@ -41,7 +41,7 @@ export const subscribeBreeders = (onChange) => {
 export const createBreeder = async (data) => {
     const payload = {
         name: data.name || "",
-        farmNumber: data.farmNumber || "",
+        farmNumber: Date.now().toString(),
         contactName: data.contactName || "",
         phone: data.phone || "",
         mapUrl: data.mapUrl || "",
@@ -58,7 +58,7 @@ export const updateBreeder = async (id, data) => {
 
     await updateDoc(breederRef, {
         name: data.name || "",
-        farmNumber: data.farmNumber || "",
+        farmNumber: Date.now().toString(),
         contactName: data.contactName || "",
         phone: data.phone || "",
         mapUrl: data.mapUrl || "",
