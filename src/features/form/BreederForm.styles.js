@@ -92,10 +92,16 @@ export const Button = styled.button`
   }
 
   ${(p) =>
-        p.$variant === "primary"
-            ? `
-    background: rgba(70, 140, 255, 0.22);
-    border-color: rgba(70, 140, 255, 0.40);
-  `
-            : ""}
+    p.$variant === "primary"
+      ? `
+  background: #2563eb;
+  border-color: #2563eb;
+  color: white;
+
+  &:hover {
+    background: #1d4ed8;
+    border-color: #1d4ed8;
+  }
+`
+      : ""}
 `;
