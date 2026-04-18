@@ -43,6 +43,7 @@ export const LoginPage = () => {
                         autoComplete="email"
                         style={{
                             padding: "10px",
+                            boxSizing: "border-box",
                             borderRadius: "8px",
                             border: "1px solid #475569",
                             background: "#020617",
@@ -59,6 +60,7 @@ export const LoginPage = () => {
                         autoComplete="current-password"
                         style={{
                             padding: "10px",
+                            boxSizing: "border-box",
                             borderRadius: "8px",
                             border: "1px solid #475569",
                             background: "#020617",
@@ -71,6 +73,7 @@ export const LoginPage = () => {
                         type="submit"
                         style={{
                             padding: "10px",
+                            boxSizing: "border-box",
                             borderRadius: "8px",
                             border: "none",
                             background: "#2563eb",
