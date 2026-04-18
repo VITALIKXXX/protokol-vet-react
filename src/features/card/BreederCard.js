@@ -5,7 +5,6 @@ import {
     Card,
     Top,
     TitleRow,
-    Badge,
     Name,
     Actions,
     SmallButton,
@@ -47,7 +46,6 @@ export const BreederCard = ({ breeder, onEdit, onDelete }) => {
         <Card>
             <Top>
                 <TitleRow>
-                    <Badge>#{breeder.farmNumber}</Badge>
                     <Name>{breeder.name}</Name>
                 </TitleRow>
 
