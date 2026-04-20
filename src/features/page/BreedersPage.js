@@ -35,9 +35,13 @@ export const BreedersPage = ({ role }) => {
 
         const match = (value) => String(value || "").toLowerCase().includes(q);
 
-        return sorted.filter(
-            (b) => match(b.name) || match(b.farmNumber) || match(b.contactName)
-        );
+        return sorted.filter((b) => {
+            const matchesContacts = (b.contacts || []).some(
+                (contact) => match(contact.person) || match(contact.phone)
+            );
+
+            return match(b.name) || matchesContacts;
+        });
     }, [breeders, query]);
 
     const handleCreate = async (data) => {

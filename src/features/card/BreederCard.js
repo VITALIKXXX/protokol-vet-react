@@ -22,15 +22,31 @@ import {
 export const BreederCard = ({ breeder, onEdit, onDelete }) => {
     const [copied, setCopied] = useState(false);
 
-    const telLink = buildTelLink(breeder.phone);
     const mapLink = normalizeMapUrl(breeder.mapUrl);
 
+    const contacts =
+        breeder.contacts?.length > 0
+            ? breeder.contacts
+            : breeder.contactName || breeder.phone
+                ? [
+                    {
+                        person: breeder.contactName || "",
+                        phone: breeder.phone || "",
+                    },
+                ]
+                : [];
+
     const handleCopy = async () => {
+        const contactsText = contacts
+            .map(
+                (contact, index) =>
+                    `Kontakt ${index + 1}: ${contact.person || "-"} | ${contact.phone || "-"}`
+            )
+            .join("\n");
+
         const text = [
             `Hodowca: ${breeder.name}`,
-            `Ferma: ${breeder.farmNumber}`,
-            breeder.contactName ? `Kontakt: ${breeder.contactName}` : "",
-            breeder.phone ? `Tel: ${breeder.phone}` : "",
+            contactsText,
             breeder.mapUrl ? `Mapa: ${breeder.mapUrl}` : "",
             breeder.note ? `Notatka: ${breeder.note}` : "",
         ]
@@ -65,19 +81,15 @@ export const BreederCard = ({ breeder, onEdit, onDelete }) => {
             </Top>
 
             <Meta>
-                {breeder.contactName && (
-                    <MetaRow>
-                        <MetaLabel>Kontakt:</MetaLabel>
-                        <MetaValue>{breeder.contactName}</MetaValue>
+                {contacts.map((contact, index) => (
+                    <MetaRow key={`${breeder.id}-${index}`}>
+                        <MetaLabel>Kontakt {index + 1}:</MetaLabel>
+                        <MetaValue>
+                            {contact.person || "—"}
+                            {contact.phone ? ` — ${contact.phone}` : ""}
+                        </MetaValue>
                     </MetaRow>
-                )}
-
-                {breeder.phone && (
-                    <MetaRow>
-                        <MetaLabel>Telefon:</MetaLabel>
-                        <MetaValue>{breeder.phone}</MetaValue>
-                    </MetaRow>
-                )}
+                ))}
 
                 {breeder.note && (
                     <MetaRow>
@@ -89,13 +101,20 @@ export const BreederCard = ({ breeder, onEdit, onDelete }) => {
 
             <Bottom>
                 <Quick>
-                    <LinkButton
-                        href={telLink || "#"}
-                        onClick={(e) => !telLink && e.preventDefault()}
-                        $disabled={!telLink}
-                    >
-                        Zadzwoń
-                    </LinkButton>
+                    {contacts.map((contact, index) => {
+                        const telLink = buildTelLink(contact.phone);
+
+                        return (
+                            <LinkButton
+                                key={`${contact.person}-${contact.phone}-${index}`}
+                                href={telLink || "#"}
+                                onClick={(e) => !telLink && e.preventDefault()}
+                                $disabled={!telLink}
+                            >
+                                Zadzwoń {contact.person || index + 1}
+                            </LinkButton>
+                        );
+                    })}
 
                     <LinkButton
                         href={mapLink || "#"}
