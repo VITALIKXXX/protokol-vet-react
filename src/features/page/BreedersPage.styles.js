@@ -18,12 +18,13 @@ export const TopGrid = styled.div`
 
 export const SearchBox = styled.div`
   display: grid;
-  gap: 6px;
+  gap: 8px;
   padding: 14px;
+  margin-bottom: 12px;
   border-radius: 14px;
-  background: #121a2a;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  background: #111827;
+  border: 1px solid #2563eb;
+  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.15);
 `;
 
 export const SearchLabel = styled.label`
@@ -32,12 +33,23 @@ export const SearchLabel = styled.label`
 `;
 
 export const SearchInput = styled.input`
-  background: #0e1422;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #e9eefb;
-  padding: 10px 12px;
+  width: 100%;
+  box-sizing: border-box;
+  background: #020617;
+  border: 1px solid #475569;
+  color: #e2e8f0;
+  padding: 12px 14px;
   border-radius: 12px;
   outline: none;
+  font-size: 15px;
+
+  &:focus {
+    border-color: #2563eb;
+  }
+
+  &::placeholder {
+    color: #94a3b8;
+  }
 `;
 
 export const SearchMeta = styled.div`

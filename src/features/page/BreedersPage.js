@@ -9,7 +9,6 @@ import { BreederForm } from "../form/BreederForm.js";
 import { BreedersList } from "../list/BreedersList.js";
 import {
     Page,
-    TopGrid,
     SearchBox,
     SearchLabel,
     SearchInput,
@@ -72,7 +71,20 @@ export const BreedersPage = ({ role }) => {
 
     return (
         <Page>
-            <TopGrid>
+            <SearchBox>
+                <SearchLabel htmlFor="q">Szukaj hodowcy lub kontaktu</SearchLabel>
+                <SearchInput
+                    id="q"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="np. Karpisiak, Jan, 500..."
+                />
+                <SearchMeta>
+                    Wyniki: <b>{filtered.length}</b> / {breeders.length}
+                </SearchMeta>
+            </SearchBox>
+
+            {!query.trim() && (
                 <BreederForm
                     mode={editingBreeder ? "edit" : "create"}
                     initialValues={editingBreeder}
@@ -80,25 +92,13 @@ export const BreedersPage = ({ role }) => {
                     onUpdate={handleUpdate}
                     onCancelEdit={handleCancelEdit}
                 />
-
-                <SearchBox>
-                    <SearchLabel htmlFor="q">Szukaj (nazwa / nr fermy / kontakt)</SearchLabel>
-                    <SearchInput
-                        id="q"
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                        placeholder="np. Kowalski, 123, Jan..."
-                    />
-                    <SearchMeta>
-                        Wyniki: <b>{filtered.length}</b> / {breeders.length}
-                    </SearchMeta>
-                </SearchBox>
-            </TopGrid>
+            )}
 
             <BreedersList
                 breeders={filtered}
                 onEdit={isAdmin ? handleEditStart : undefined}
-                onDelete={isAdmin ? handleDelete : undefined} />
+                onDelete={isAdmin ? handleDelete : undefined}
+            />
         </Page>
     );
 };
