@@ -96,7 +96,7 @@ export const BreedersPage = ({ role }) => {
 
             <BreedersList
                 breeders={filtered}
-                onEdit={isAdmin ? handleEditStart : undefined}
+                onEdit={handleEditStart}
                 onDelete={isAdmin ? handleDelete : undefined}
             />
         </Page>
