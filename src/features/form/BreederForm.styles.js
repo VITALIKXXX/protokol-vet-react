@@ -46,6 +46,7 @@ export const Field = styled.div`
 export const Label = styled.label`
   font-size: 13px;
   opacity: 0.85;
+  font-weight: 600;
 `;
 
 const baseInput = `
@@ -104,4 +105,14 @@ export const Button = styled.button`
   }
 `
       : ""}
+`;
+
+export const ContactBlock = styled.div`
+  padding: 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;

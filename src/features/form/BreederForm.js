@@ -5,13 +5,13 @@ import {
     Title,
     Hint,
     Form,
-    Row,
     Field,
     Label,
     Input,
     Textarea,
     Actions,
     Button,
+    ContactBlock,
 } from "./BreederForm.styles.js";
 
 const createEmptyContact = () => ({ person: "", phone: "" });
@@ -143,65 +143,47 @@ export const BreederForm = ({
                     />
                 </Field>
 
-                <Row>
-                    <Field>
-                        <Label>Kontakt 1 — osoba</Label>
-                        <Input
-                            value={values.contacts[0].person}
-                            onChange={setContactField(0, "person")}
-                            placeholder="np. Jan"
-                        />
-                    </Field>
+                <ContactBlock>
+                    <Label>Kontakt 1</Label>
+                    <Input
+                        value={values.contacts[0].person}
+                        onChange={setContactField(0, "person")}
+                        placeholder="Imię i nazwisko"
+                    />
+                    <Input
+                        value={values.contacts[0].phone}
+                        onChange={setContactField(0, "phone")}
+                        placeholder="Telefon"
+                    />
+                </ContactBlock>
 
-                    <Field>
-                        <Label>Kontakt 1 — telefon</Label>
-                        <Input
-                            value={values.contacts[0].phone}
-                            onChange={setContactField(0, "phone")}
-                            placeholder="np. 500 123 456"
-                        />
-                    </Field>
-                </Row>
+                <ContactBlock>
+                    <Label>Kontakt 2</Label>
+                    <Input
+                        value={values.contacts[1].person}
+                        onChange={setContactField(1, "person")}
+                        placeholder="Imię i nazwisko (opcjonalnie)"
+                    />
+                    <Input
+                        value={values.contacts[1].phone}
+                        onChange={setContactField(1, "phone")}
+                        placeholder="Telefon (opcjonalnie)"
+                    />
+                </ContactBlock>
 
-                <Row>
-                    <Field>
-                        <Label>Kontakt 2 — osoba</Label>
-                        <Input
-                            value={values.contacts[1].person}
-                            onChange={setContactField(1, "person")}
-                            placeholder="opcjonalnie"
-                        />
-                    </Field>
-
-                    <Field>
-                        <Label>Kontakt 2 — telefon</Label>
-                        <Input
-                            value={values.contacts[1].phone}
-                            onChange={setContactField(1, "phone")}
-                            placeholder="opcjonalnie"
-                        />
-                    </Field>
-                </Row>
-
-                <Row>
-                    <Field>
-                        <Label>Kontakt 3 — osoba</Label>
-                        <Input
-                            value={values.contacts[2].person}
-                            onChange={setContactField(2, "person")}
-                            placeholder="opcjonalnie"
-                        />
-                    </Field>
-
-                    <Field>
-                        <Label>Kontakt 3 — telefon</Label>
-                        <Input
-                            value={values.contacts[2].phone}
-                            onChange={setContactField(2, "phone")}
-                            placeholder="opcjonalnie"
-                        />
-                    </Field>
-                </Row>
+                <ContactBlock>
+                    <Label>Kontakt 3</Label>
+                    <Input
+                        value={values.contacts[2].person}
+                        onChange={setContactField(2, "person")}
+                        placeholder="Imię i nazwisko (opcjonalnie)"
+                    />
+                    <Input
+                        value={values.contacts[2].phone}
+                        onChange={setContactField(2, "phone")}
+                        placeholder="Telefon (opcjonalnie)"
+                    />
+                </ContactBlock>
 
                 <Field>
                     <Label>Link Google Maps</Label>
