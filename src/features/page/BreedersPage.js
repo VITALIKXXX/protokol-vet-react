@@ -63,8 +63,13 @@ export const BreedersPage = ({ role }) => {
         }
     };
     const handleEditStart = (breeder) => {
+        setQuery("");
         setEditingBreeder(breeder);
-        window.scrollTo({ top: 0, behavior: "smooth" });
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
     };
 
     const handleCancelEdit = () => setEditingBreeder(null);
