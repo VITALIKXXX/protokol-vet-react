@@ -19,7 +19,7 @@ import {
     CopyButton,
 } from "./BreederCard.styles.js";
 
-export const BreederCard = ({ breeder, onEdit, onDelete }) => {
+export const BreederCard = ({ breeder, onOpen, onEdit, onDelete }) => {
     const [copied, setCopied] = useState(false);
 
     const mapLink = normalizeMapUrl(breeder.mapUrl);
@@ -59,7 +59,7 @@ export const BreederCard = ({ breeder, onEdit, onDelete }) => {
     };
 
     return (
-        <Card>
+        <Card onClick={() => onOpen(breeder)}>
             <Top>
                 <TitleRow>
                     <Name>{breeder.name}</Name>
@@ -67,13 +67,25 @@ export const BreederCard = ({ breeder, onEdit, onDelete }) => {
 
                 <Actions>
                     {onEdit && (
-                        <SmallButton type="button" onClick={() => onEdit(breeder)}>
+                        <SmallButton
+                            type="button"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onEdit(breeder);
+                            }}
+                        >
                             Edytuj
                         </SmallButton>
                     )}
 
                     {onDelete && (
-                        <DangerButton type="button" onClick={() => onDelete(breeder.id)}>
+                        <DangerButton
+                            type="button"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onDelete(breeder.id);
+                            }}
+                        >
                             Usuń
                         </DangerButton>
                     )}
@@ -108,7 +120,13 @@ export const BreederCard = ({ breeder, onEdit, onDelete }) => {
                             <LinkButton
                                 key={`${contact.person}-${contact.phone}-${index}`}
                                 href={telLink || "#"}
-                                onClick={(e) => !telLink && e.preventDefault()}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+
+                                    if (!telLink) {
+                                        e.preventDefault();
+                                    }
+                                }}
                                 $disabled={!telLink}
                             >
                                 Zadzwoń {contact.person || index + 1}
@@ -120,13 +138,25 @@ export const BreederCard = ({ breeder, onEdit, onDelete }) => {
                         href={mapLink || "#"}
                         target="_blank"
                         rel="noreferrer"
-                        onClick={(e) => !mapLink && e.preventDefault()}
+                        onClick={(e) => {
+                            e.stopPropagation();
+
+                            if (!mapLink) {
+                                e.preventDefault();
+                            }
+                        }}
                         $disabled={!mapLink}
                     >
                         Mapa
                     </LinkButton>
 
-                    <CopyButton type="button" onClick={handleCopy}>
+                    <CopyButton
+                        type="button"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            handleCopy();
+                        }}
+                    >
                         {copied ? "Skopiowano ✅" : "Kopiuj"}
                     </CopyButton>
                 </Quick>

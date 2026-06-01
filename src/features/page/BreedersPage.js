@@ -7,6 +7,7 @@ import {
 } from "../../core/firebase/breedersApi.js";
 import { BreederForm } from "../form/BreederForm.js";
 import { BreedersList } from "../list/BreedersList.js";
+import { BreederDetails } from "../details/BreederDetails.js";
 import {
     Page,
     SearchBox,
@@ -21,6 +22,7 @@ export const BreedersPage = ({ role }) => {
     const [breeders, setBreeders] = useState([]);
     const [query, setQuery] = useState("");
     const [editingBreeder, setEditingBreeder] = useState(null);
+    const [selectedBreeder, setSelectedBreeder] = useState(null);
 
     useEffect(() => {
         const unsubscribe = subscribeBreeders(setBreeders);
@@ -62,8 +64,10 @@ export const BreedersPage = ({ role }) => {
             setEditingBreeder(null);
         }
     };
+
     const handleEditStart = (breeder) => {
         setQuery("");
+        setSelectedBreeder(null);
         setEditingBreeder(breeder);
 
         window.scrollTo({
@@ -72,38 +76,59 @@ export const BreedersPage = ({ role }) => {
         });
     };
 
+    const handleOpenDetails = (breeder) => {
+        setSelectedBreeder(breeder);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    const handleCloseDetails = () => {
+        setSelectedBreeder(null);
+    };
+
     const handleCancelEdit = () => setEditingBreeder(null);
 
     return (
         <Page>
-            <SearchBox>
-                <SearchLabel htmlFor="q">Szukaj hodowcy lub kontaktu</SearchLabel>
-                <SearchInput
-                    id="q"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="np. Karpisiak, Jan, 500..."
+            {selectedBreeder ? (
+                <BreederDetails
+                    breeder={selectedBreeder}
+                    onBack={handleCloseDetails}
+                    onEdit={handleEditStart}
+                    onDelete={isAdmin ? handleDelete : undefined}
                 />
-                <SearchMeta>
-                    Wyniki: <b>{filtered.length}</b> / {breeders.length}
-                </SearchMeta>
-            </SearchBox>
+            ) : (
+                <>
+                    <SearchBox>
+                        <SearchLabel htmlFor="q">Szukaj hodowcy lub kontaktu</SearchLabel>
+                        <SearchInput
+                            id="q"
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            placeholder="np. Karpisiak, Jan, 500..."
+                        />
+                        <SearchMeta>
+                            Wyniki: <b>{filtered.length}</b> / {breeders.length}
+                        </SearchMeta>
+                    </SearchBox>
 
-            {!query.trim() && (
-                <BreederForm
-                    mode={editingBreeder ? "edit" : "create"}
-                    initialValues={editingBreeder}
-                    onCreate={handleCreate}
-                    onUpdate={handleUpdate}
-                    onCancelEdit={handleCancelEdit}
-                />
+                    {!query.trim() && (
+                        <BreederForm
+                            mode={editingBreeder ? "edit" : "create"}
+                            initialValues={editingBreeder}
+                            onCreate={handleCreate}
+                            onUpdate={handleUpdate}
+                            onCancelEdit={handleCancelEdit}
+                        />
+                    )}
+
+                    <BreedersList
+                        breeders={filtered}
+                        onOpen={handleOpenDetails}
+                        onEdit={handleEditStart}
+                        onDelete={isAdmin ? handleDelete : undefined}
+                    />
+                </>
             )}
-
-            <BreedersList
-                breeders={filtered}
-                onEdit={handleEditStart}
-                onDelete={isAdmin ? handleDelete : undefined}
-            />
         </Page>
     );
 };

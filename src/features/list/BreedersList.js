@@ -1,7 +1,7 @@
 import { BreederCard } from "../card/BreederCard.js";
 import { Empty, EmptyTitle, EmptyText, Grid } from "./BreedersList.styles.js";
 
-export const BreedersList = ({ breeders, onEdit, onDelete }) => {
+export const BreedersList = ({ breeders, onOpen, onEdit, onDelete }) => {
     if (!breeders.length) {
         return (
             <Empty>
@@ -14,7 +14,12 @@ export const BreedersList = ({ breeders, onEdit, onDelete }) => {
     return (
         <Grid>
             {breeders.map((b) => (
-                <BreederCard key={b.id} breeder={b} onEdit={onEdit} onDelete={onDelete} />
+                <BreederCard
+                    key={b.id}
+                    breeder={b}
+                    onOpen={onOpen}
+                    onEdit={onEdit}
+                    onDelete={onDelete} />
             ))}
         </Grid>
     );
