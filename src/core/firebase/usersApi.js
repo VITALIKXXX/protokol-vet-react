@@ -9,13 +9,17 @@ export const ensureUserDoc = async ({ uid, email }) => {
 
     await setDoc(ref, {
         email: email || "",
+        displayName: email?.split("@")[0] || "Pracownik",
         role: "worker",
         createdAt: serverTimestamp(),
     });
 };
 
-export const getMyRole = async (uid) => {
+export const getMyUserData = async (uid) => {
     const ref = doc(db, "users", uid);
     const snap = await getDoc(ref);
-    return snap.exists() ? snap.data().role : null;
+
+    if (!snap.exists()) return null;
+
+    return snap.data();
 };
