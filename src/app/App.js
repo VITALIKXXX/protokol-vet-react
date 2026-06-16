@@ -7,7 +7,7 @@ const App = () => {
     <AppShell>
       <Header>
         <Title>Baza Hodowców</Title>
-        <Subtitle>Telefon • Mapa • Kontakt • Notatka (offline)</Subtitle>
+        <Subtitle>Telefon • Mapa • Kontakt • Notatka </Subtitle>
       </Header>
 
       <Main>
