@@ -1,9 +1,21 @@
 import { useEffect, useState } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebaseApp.js";
-import { ensureUserDoc, getMyUserData } from "../usersApi.js";
+import {
+    ensureUserDoc,
+    getMyUserData,
+} from "../usersApi.js";
 import { LoginPage } from "./LoginPage.js";
 import { WelcomeScreen } from "../../../features/welcome/WelcomeScreen.js";
+import {
+    AuthWrapper,
+    Loading,
+    UserBar,
+    UserInfo,
+    UserBadge,
+    RoleBadge,
+    LogoutButton,
+} from "./AuthGate.styles.js";
 
 export const AuthGate = ({ children }) => {
     const [user, setUser] = useState(null);
@@ -15,41 +27,72 @@ export const AuthGate = ({ children }) => {
     useEffect(() => {
         let welcomeTimeout;
 
-        const unsub = onAuthStateChanged(auth, async (u) => {
-            setUser(u);
+        const unsubscribe = onAuthStateChanged(
+            auth,
+            async (firebaseUser) => {
+                setUser(firebaseUser);
 
-            if (!u) {
-                setRole(null);
-                setShowWelcome(false);
-                setLoading(false);
-                return;
+                if (!firebaseUser) {
+                    setRole(null);
+                    setDisplayName("");
+                    setShowWelcome(false);
+                    setLoading(false);
+                    return;
+                }
+
+                try {
+                    setLoading(true);
+
+                    await ensureUserDoc({
+                        uid: firebaseUser.uid,
+                        email: firebaseUser.email,
+                    });
+
+                    const userData = await getMyUserData(
+                        firebaseUser.uid
+                    );
+
+                    setRole(userData?.role || "worker");
+
+                    setDisplayName(
+                        userData?.displayName ||
+                        firebaseUser.email?.split("@")[0] ||
+                        "Pracownik"
+                    );
+
+                    setShowWelcome(true);
+
+                    welcomeTimeout = setTimeout(() => {
+                        setShowWelcome(false);
+                    }, 3000);
+                } catch (error) {
+                    console.error(
+                        "Błąd pobierania użytkownika:",
+                        error
+                    );
+
+                    setRole("worker");
+
+                    setDisplayName(
+                        firebaseUser.email?.split("@")[0] ||
+                        "Pracownik"
+                    );
+
+                    setShowWelcome(false);
+                } finally {
+                    setLoading(false);
+                }
             }
-
-            setLoading(true);
-
-            await ensureUserDoc({ uid: u.uid, email: u.email });
-
-            const userData = await getMyUserData(u.uid);
-
-            setRole(userData?.role || "worker");
-            setDisplayName(userData?.displayName || u.email?.split("@")[0] || "Pracownik");
-
-            setLoading(false);
-            setShowWelcome(true);
-
-            welcomeTimeout = setTimeout(() => {
-                setShowWelcome(false);
-            }, 3000);
-        });
+        );
 
         return () => {
-            unsub();
+            unsubscribe();
             clearTimeout(welcomeTimeout);
         };
     }, []);
 
     if (loading) {
-        return <div style={{ padding: 16 }}>Ładowanie...</div>;
+        return <Loading>Ładowanie aplikacji...</Loading>;
     }
 
     if (!user) {
@@ -61,15 +104,35 @@ export const AuthGate = ({ children }) => {
     }
 
     return (
-        <div>
-            <div style={{ padding: 10, color: "black", fontSize: 16, opacity: 0.8 }}>
-                Zalogowany: <b>{user.email}</b> | rola: <b>{role || "brak"}</b>{" "}
-                <button onClick={() => signOut(auth)} style={{ marginLeft: 10 }}>
-                    Wyloguj
-                </button>
-            </div>
+        <AuthWrapper>
+            <UserBar>
+                <UserInfo>
+                    <UserBadge>
+                        👤 Zalogowany:
+                        <strong>
+                            {displayName || user.email}
+                        </strong>
+                    </UserBadge>
+
+                    <RoleBadge>
+                        🛡️ Rola:
+                        <strong>
+                            {role === "admin"
+                                ? "ADMIN"
+                                : "WORKER"}
+                        </strong>
+                    </RoleBadge>
+                </UserInfo>
+
+                <LogoutButton
+                    type="button"
+                    onClick={() => signOut(auth)}
+                >
+                    🚪 Wyloguj
+                </LogoutButton>
+            </UserBar>
 
             {children({ role })}
-        </div>
+        </AuthWrapper>
     );
 };
