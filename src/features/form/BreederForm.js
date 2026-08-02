@@ -206,12 +206,12 @@ export const BreederForm = ({
 
                 <Actions>
                     <Button $variant="primary" type="submit" disabled={!isValid}>
-                        {mode === "edit" ? "Zapisz zmiany" : "Dodaj"}
+                        {mode === "edit" ? "💾 Zapisz zmiany" : "➕ Dodaj hodowcę"}
                     </Button>
 
                     {mode === "edit" && (
                         <Button type="button" onClick={onCancelEdit}>
-                            Anuluj
+                            ✕ Anuluj
                         </Button>
                     )}
                 </Actions>

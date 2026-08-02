@@ -74,7 +74,7 @@ export const BreederCard = ({ breeder, onOpen, onEdit, onDelete }) => {
                                 onEdit(breeder);
                             }}
                         >
-                            Edytuj
+                            ✏️ Edytuj
                         </SmallButton>
                     )}
 
@@ -86,7 +86,7 @@ export const BreederCard = ({ breeder, onOpen, onEdit, onDelete }) => {
                                 onDelete(breeder.id);
                             }}
                         >
-                            Usuń
+                            🗑 Usuń
                         </DangerButton>
                     )}
                 </Actions>
@@ -129,7 +129,7 @@ export const BreederCard = ({ breeder, onOpen, onEdit, onDelete }) => {
                                 }}
                                 $disabled={!telLink}
                             >
-                                Zadzwoń {contact.person || index + 1}
+                                📞 {contact.person || `Kontakt ${index + 1}`}
                             </LinkButton>
                         );
                     })}
@@ -147,7 +147,7 @@ export const BreederCard = ({ breeder, onOpen, onEdit, onDelete }) => {
                         }}
                         $disabled={!mapLink}
                     >
-                        Mapa
+                        📍 Mapa
                     </LinkButton>
 
                     <CopyButton
@@ -157,7 +157,7 @@ export const BreederCard = ({ breeder, onOpen, onEdit, onDelete }) => {
                             handleCopy();
                         }}
                     >
-                        {copied ? "Skopiowano ✅" : "Kopiuj"}
+                        {copied ? "✅ Skopiowano" : "📋 Kopiuj"}
                     </CopyButton>
                 </Quick>
             </Bottom>
