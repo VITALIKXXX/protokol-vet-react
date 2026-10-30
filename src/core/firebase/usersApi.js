@@ -1,18 +1,15 @@
-import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
+import { doc, getDoc, } from "firebase/firestore";
 import { db } from "./firebaseApp.js";
 
-export const ensureUserDoc = async ({ uid, email }) => {
+export const ensureUserDoc = async ({ uid }) => {
     const ref = doc(db, "users", uid);
     const snap = await getDoc(ref);
 
-    if (snap.exists()) return;
-
-    await setDoc(ref, {
-        email: email || "",
-        displayName: email?.split("@")[0] || "Pracownik",
-        role: "worker",
-        createdAt: serverTimestamp(),
-    });
+    if (!snap.exists()) {
+        throw new Error(
+            "Brak profilu użytkownika. Skontaktuj się z administratorem."
+        );
+    }
 };
 
 export const getMyUserData = async (uid) => {
